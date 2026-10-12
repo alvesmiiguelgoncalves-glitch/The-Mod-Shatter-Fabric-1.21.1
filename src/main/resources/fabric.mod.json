@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "shatter",
+	"version": "${version}",
+	"name": "Shatter (Fabric)",
+	"description": "Nova animação de morte: os mobs se despedaçam em pedaços que voam e somem. Porte para Fabric 1.21.1 do mod Shatter do iChun (somente cliente).",
+	"authors": [
+		"iChun (mod original)",
+		"Porte para Fabric"
+	],
+	"contact": {
+		"homepage": "https://ichun.me/mods/shatter/",
+		"issues": "https://github.com/iChun/Shatter/issues"
+	},
+	"license": "LGPL-3.0-only",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.shatter.fabric.ShatterClient"
+		]
+	},
+	"mixins": [
+		{
+			"config": "shatter.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

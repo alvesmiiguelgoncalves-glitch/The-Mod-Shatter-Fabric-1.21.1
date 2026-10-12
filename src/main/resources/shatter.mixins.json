@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "com.shatter.fabric.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"AnimalModelInvoker",
+		"CompositeEntityModelInvoker",
+		"LivingEntityRendererInvoker"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
