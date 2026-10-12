@@ -28,6 +28,14 @@ Na primeira execução é criado `config/shatter.json` (mesmas opções do origi
 | `enableBossShatter` | `false` | Bosses (Wither, Ender Dragon) se despedaçam |
 | `enableChildShatter` | `false` | Filhotes se despedaçam |
 
+## Ajustes desta versão de correção
+- Reduzido o deslocamento horizontal dos fragmentos e o multiplicador que os espalhava longe demais.
+- Os fragmentos já começam com transparência leve e desaparecem gradualmente durante a duração do efeito.
+- Corrigida a semente aleatória por fragmento para que a posição/rotação não mude aleatoriamente a cada frame.
+- O efeito não é aplicado a aranhas, aranhas das cavernas, devastadores, guardiões, guardiões-mestres, slimes, cubos de magma e zumbis gigantes.
+
+**Limitação importante:** os problemas de texturas de profissões/camadas (aldeões, aldeões zumbis, cavalos com acessórios, afogado, stray, vórtice, tatu e outros) ainda precisam de uma correção específica no sistema de renderização. O efeito atual captura o modelo principal e uma única textura; várias dessas aparências são desenhadas por camadas adicionais do renderer. Não quero afirmar que esses bugs foram resolvidos sem conseguir compilar e testar no jogo.
+
 ## Diferenças em relação ao original
 - Reescrito a partir da leitura do bytecode do original (não havia código-fonte). A física, o tempo
   (espera de 2 ticks, 105 ticks de duração), o fade e o sorteio de movimento de cada pedaço

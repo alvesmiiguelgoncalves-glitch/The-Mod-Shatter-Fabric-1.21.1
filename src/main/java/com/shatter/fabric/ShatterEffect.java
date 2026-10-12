@@ -63,9 +63,10 @@ public final class ShatterEffect {
 		this.z = this.prevZ = acquired.getZ();
 
 		Vec3d motion = acquired.getVelocity();
-		this.vx = motion.x * 0.4D;
-		this.vy = motion.y * 0.15D;
-		this.vz = motion.z * 0.4D;
+		// O efeito anterior amplificava demais o deslocamento horizontal dos fragmentos.
+		this.vx = motion.x * 0.2D;
+		this.vy = motion.y * 0.10D;
+		this.vz = motion.z * 0.2D;
 	}
 
 	/** Cria o efeito a partir de um mob morto; devolve null se não for possível (o mob fica como está). */
@@ -124,9 +125,9 @@ public final class ShatterEffect {
 			return;
 		}
 
-		// Progresso (0 -> 1) e transparência (1 -> 0), como no original.
-		float p = (float) MathHelper.clamp(Math.pow((progress + tickDelta) / 100.0D, 0.99D), 0.0D, 1.0D);
-		float alpha = 1.0F - p;
+		// Os fragmentos começam ligeiramente transparentes e desaparecem gradualmente.
+		float p = (float) MathHelper.clamp((progress + tickDelta) / (double) LIFETIME, 0.0D, 1.0D);
+		float alpha = 0.82F * (1.0F - p);
 		if (alpha <= 0.0F) {
 			return;
 		}
@@ -159,12 +160,13 @@ public final class ShatterEffect {
 			stack.push();
 
 			// Cada pedaço tem uma "semente" própria, então o movimento dele é sempre o mesmo a cada frame.
-			rand.setSeed(rand.nextInt() * id * i * 1000);
+			// Semente estável por fragmento: não muda aleatoriamente entre frames.
+			rand.setSeed(0x5DEECE66DL ^ ((long) id * 31L) ^ ((long) i * 1000L));
 
 			float a = rand.nextFloat() * (rand.nextFloat() > 0.5F ? -1 : 1) * p;
 			double ty = rand.nextDouble() * p * (vy + (rand.nextDouble() - 1.0D));
 			float b = rand.nextFloat() * (rand.nextFloat() > 0.5F ? -1 : 1) * p;
-			stack.translate(a * vz * 5.0D, ty, b * vx * 5.0D);
+			stack.translate(a * vz * 2.5D, ty, b * vx * 2.5D);
 
 			float angle = 180.0F * rand.nextFloat() * p;
 			float ax = rand.nextFloat() * (rand.nextFloat() > 0.5F ? -1 : 1) * p;

@@ -15,6 +15,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.mob.CaveSpiderEntity;
+import net.minecraft.entity.mob.ElderGuardianEntity;
+import net.minecraft.entity.mob.GiantEntity;
+import net.minecraft.entity.mob.GuardianEntity;
+import net.minecraft.entity.mob.MagmaCubeEntity;
+import net.minecraft.entity.mob.RavagerEntity;
+import net.minecraft.entity.mob.SlimeEntity;
+import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
@@ -111,11 +119,26 @@ public final class ShatterManager {
 		if (!config.enableBossShatter && isBoss(entity)) {
 			return false;
 		}
+		// Evita o efeito nos mobs que podem causar desconforto/fobias e nos seus equivalentes.
+		if (isExcludedMob(entity)) {
+			return false;
+		}
 		return config.enableChildShatter || !entity.isBaby();
 	}
 
 	private static boolean isBoss(LivingEntity entity) {
 		return entity instanceof WitherEntity || entity instanceof EnderDragonEntity;
+	}
+
+	private static boolean isExcludedMob(LivingEntity entity) {
+		return entity instanceof SpiderEntity
+				|| entity instanceof CaveSpiderEntity
+				|| entity instanceof RavagerEntity
+				|| entity instanceof GuardianEntity
+				|| entity instanceof ElderGuardianEntity
+				|| entity instanceof SlimeEntity
+				|| entity instanceof MagmaCubeEntity
+				|| entity instanceof GiantEntity;
 	}
 
 	public static void onWorldRender(WorldRenderContext context) {
